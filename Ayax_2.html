@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax 2 - Local JSON File</title>
+</head>
+<body>
+    <button id="button_1">Get JSON User File</button><br>
+    <button id="button_2">Get JSON Users File</button>
+
+    
+
+      <div id="tartalom_1"> </div>
+      <div id="tartalom_2"> </div>
+
+
+
+    <script>
+        //Create evenet listener
+        document.getElementById('button_1').addEventListener('click', loadJSON);
+        document.getElementById('button_2').addEventListener('click', loadJSONS);
+
+        function loadJSON(){
+            let xhr = new XMLHttpRequest();
+            //console.log(xhr);
+            xhr.open('GET', 'user.json', true);
+
+            xhr.onload = function(){
+                if(this.status == 200){
+                    let valtozo = JSON.parse(this.responseText);
+                    let tartalom = '<ul>';
+                    tartalom += `<li>ID:${valtozo.id}</li>`
+                    tartalom += `<li>Name:${valtozo.name}</li>`
+                    tartalom += `<li>Email:${valtozo.email}</li>`
+                    tartalom += '</ul>';
+                    document.getElementById("tartalom_1").innerHTML = tartalom;
+                    
+                }
+                
+            };
+
+            xhr.send();
+        }
+
+
+
+        function loadJSONS(){
+            let xhr = new XMLHttpRequest();
+            //console.log(xhr);
+            xhr.open('GET', 'users.json', true);
+
+            xhr.onload = function(){
+                if(this.status == 200){
+                    let users = JSON.parse(this.responseText);
+
+                    let tartalom = "";
+                    users.forEach((user) => {
+                    tartalom += '<ul>';
+                    tartalom += `<li>ID:${user.id}</li>`
+                    tartalom += `<li>Name:${user.name}</li>`
+                    tartalom += `<li>Email:${user.email}</li>`
+                    tartalom += '</ul>';
+                    });
+                    
+                    document.getElementById("tartalom_2").innerHTML = tartalom;
+                    
+                }
+                
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
